@@ -19,7 +19,7 @@ The following are the files that accompany the data:
 		b) Model_Run.R - 
 		c) Model_Diag.R - 
 		d) Model_Funcs.R
-		e) Sampler_fitR.R - 
+		e) Sampler_fitR.R - This function is from the R package fitR. The package version might not work in newer versions of R, so this is a copy
 	2. Variable codebook - describing variables contained in the dataset including data types and value labels
 
 Running the code
