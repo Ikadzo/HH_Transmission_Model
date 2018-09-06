@@ -6,7 +6,7 @@
 # and a plot showing correlation patterns.
 # 
 # Parameter fitting is done in two parts:
-# Part 1: Data distinguishes between RSV A and B and fits and interactive model
+# Part 1: Data distinguishes between RSV A and B and fits an interactive model
 #         Given the posterior estimates of the parameters, distributions of the
 #         per person household transmission rate and community transmission rate
 #         are plotted. This is Figure 3. in the main article.
