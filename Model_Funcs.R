@@ -1,5 +1,10 @@
-# This code contains functions for fitting the Bayesian IBM either for a single 
-# pathogen (SECTION 1) or for two interacting pathogens (SECTION 2). 
+# Author:         Ivy K Kombe
+# Institutions:   KEMRI-Wellcome Trust Research Programme, Kilifi, Kenya
+#                 London Schoool of Hygiene and Tropical Medicine, London, UK
+# Date Published: 13th September 2018
+################################################################################
+# This code contains functions for fitting the HH transmission model either for 
+# a single pathogen (SECTION 1) or for two interacting pathogens (SECTION 2). 
 ################################################################################
 # SECTION 1 (12 parameters)
 # For a single pathogen the following parameters are estimated:

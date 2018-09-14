@@ -1,3 +1,8 @@
+# Author:         Ivy K Kombe
+# Institutions:   KEMRI-Wellcome Trust Research Programme, Kilifi, Kenya
+#                 London Schoool of Hygiene and Tropical Medicine, London, UK
+# Date Published: 13th September 2018
+################################################################################
 # This is the main model fitting function. It calls the data, the model functions, 
 # the model fitting functions and the diagnostic fuctions. The diagnosis part
 # is interactive, trace plots are plotted and the user has to input the burn-in 
@@ -119,6 +124,11 @@ Res.group.c3<-mcmcMH(target=IBM.posterior.group,init.theta=Paras1.c3,
 # Running the main diagnostic function in 'Model_Diag.R'
 Res.group.diag<-IBM.all.diag(chain1=Res.group.c1,chain2=Res.group.c2,chain3=Res.group.c3,
                                prior.limits=prior.limits.group,desc='RSV A and B')
+# Save the chain results so that they can be accessed by the validation code ***
+# In this case we created a folder 'Para_distributions' that contains the results 
+# of each chain run.
+save(Res.group.diag,file='Para_distributions/Res.group.diag.RData')
+
 # Calculating the median and 95% Credible intervals
 Res.summary.RSV<-t(exp(apply(Res.group.diag$Res[names(Paras1)],2,Quntile.func)))
 
@@ -126,7 +136,6 @@ Res.summary.RSV<-t(exp(apply(Res.group.diag$Res[names(Paras1)],2,Quntile.func)))
 #     and community transmission rate. This is Figure 3. in the main 
 #     article.
 Rates.plot(Par.dist=Res.group.diag$Res[,-16])
-
 ################################### PART 2 #####################################
 # --- Algorithm specifics
 # The standard deviation for the multivariate proposal distribution

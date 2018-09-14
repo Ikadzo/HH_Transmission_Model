@@ -1,4 +1,9 @@
-Project: Model-based estimates of transmission of respiratory syncytial virus within households.
+Author:         Ivy K Kombe
+Institutions:   KEMRI-Wellcome Trust Research Programme, Kilifi, Kenya
+                London Schoool of Hygiene and Tropical Medicine, London, UK
+Date Published: 13th September 2018
+
+Project:        Model-based estimates of transmission of respiratory syncytial virus within households.
 
 This work describes the analysis of household cohort data collected over a period of 6 months covering an epidemic of respiratory syncytial virus (RSV). The data was collected from a rural coastal community in Kenya in 2009.The aim of the analysis is to gain a better understanding of RSV transmission for the purpose of intervention planning. We show that household size, symptom status and viral load are important factors of within household transmission. We find evidence of the possible existence of an RSV group specific transmission niche that could form part of the explanation for RSV A and B temporal and geographical co-existence.  
 
@@ -10,19 +15,22 @@ The analysis was done in RStudio Version 1.1.383 - https://www.rstudio.com/. The
 
 
 Dataset 
-The dataset is available from ... 
+There are two data files provided for the analysis. One is the household cohort dat. The other is on the results of RSV antigen testing conducted at the Kilifi County Hospital during the same time period as the household study. These data are for children <5 years of age 
 
 File list
 The following are the files that accompany the data:
 	1. Code scripts used to run the analysis and generate results
-		a) Data_Prep.R - 
-		b) Model_Run.R - 
-		c) Model_Diag.R - 
-		d) Model_Funcs.R
-		e) Sampler_fitR.R - This function is from the R package fitR. The package version might not work in newer versions of R, so this is a copy
+		a) Data_Prep.R - Modifies the data for fitting
+		b) Model_Run.R - Runs the MCMC fitting algorithm
+		c) Model_Diag.R - Runs diagnostics on the results of the MCMC chains
+		d) Model_Funcs.R - Contains the prior, likelihood and posterior functions
+		e) Sampler_fitR.R - The package 'fitR' that contains the MCMC functions needed will not load on the latest version of R. As a work-around, I copied the function codes from github.
+		f) Model_Validate - Runs the model validation process
+		g) Model_SA - Runs the sensitivity analysis described in the main article
+
 	2. Variable codebook - describing variables contained in the dataset including data types and value labels
 
-Running the code
+Running the main code
 Step 1:
 Download the files into your designated folder
 

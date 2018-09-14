@@ -1,7 +1,9 @@
-# fitR will not load on the latest version or R
-# so I got these from github...need to code my own sampler!!!
-# 
-# 24th May 2017
+# The package 'fitR' that contains the MCMC functions needed will not load on
+# the latest version of R. As a work-around, I copied the function codes from 
+# github.
+# Link:     https://github.com/sbfnk/fitR/blob/master/R/fitR-package.r
+# Accessed: 24th May 2017
+################################################################################
 library('tmvtnorm')
 updateCovmat <- function(covmat,theta.mean,theta,i) {
   

@@ -1,3 +1,8 @@
+# Author:         Ivy K Kombe
+# Institutions:   KEMRI-Wellcome Trust Research Programme, Kilifi, Kenya
+#                 London Schoool of Hygiene and Tropical Medicine, London, UK
+# Date Published: 13th September 2018
+################################################################################
 # This function is called by 'Model_Run.R' to run diagnostics on the MCMC runs
 # Convergence is assessed visually and hence the user has to input the burn-in 
 # and thinning. This works for 3 MCMC chains. 
@@ -115,7 +120,7 @@ Rates.plot<-function(Par.dist){
   # small HH and symptomatic high viral load infectious contact
   small.sym.high<-exp(Par.dist[['eta.A']][take]) * exp(Par.dist[['HighSym']][take]) 
   # large HH and asymptomatic infectious contact
-  large.asym<-exp(Par.dist[['eta.A']][take]) 
+  large.asym<-exp(Par.dist[['eta.A']][take]) * exp(Par.dist[['hh.size']][take])
   # large HH and symptomatic low viral load infectious contact
   large.sym.low<-exp(Par.dist[['eta.A']][take]) * exp(Par.dist[['LowSym']][take]) *  exp(Par.dist[['hh.size']][take])
   # large HH and symptomatic high viral load infectious contact
@@ -127,11 +132,18 @@ Rates.plot<-function(Par.dist){
   Infectiousness=rep(c('Asymptomatic','Symptomatic & low load','Symptomatic & high load'),each=1000)
   data.a<-data.frame(HH.size,Infectiousness,A.data)
   # The plot for RSV A within HH rates
-  p1<-ggplot(data.a, aes(x=HH.size, y=A.data, fill=Infectiousness)) +
+  p1.hh<-ggplot(data.a, aes(x=HH.size, y=A.data, fill=Infectiousness)) +
     geom_boxplot(outlier.shape = NA) + theme(legend.position="none") + 
-    labs(y = "Pair-wise rate of within household exposure /susceptible /day", x= "Household size",title='RSV A') + 
+    labs(y = "Pair-wise rate of within household exposure /susceptible /day",
+         x= "Household size",title='RSV A',subtitle='Household exposure') + 
     scale_y_continuous(limits = quantile(data.a$A.data, c(0.025, 0.975))) +
-    theme(axis.title.y=element_text(size=rel(1), angle=90))
+    theme(axis.title.y=element_text(size=10, angle=90),
+          axis.title.x=element_text(size=12),
+          axis.text=element_text(size=10),
+          plot.title = element_text(size = 15, face = "bold"),
+          plot.subtitle = element_text(size = 10, face = "bold"),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "grey"))
   
   # RSV B: Calculating the per person pair-wise within household risk of exposure
   # for different combinations of categories
@@ -142,7 +154,7 @@ Rates.plot<-function(Par.dist){
   # small HH and symptomatic high viral load infectious contact
   small.sym.high<-exp(Par.dist[['eta.B']][take]) * exp(Par.dist[['HighSym']][take]) 
   # large HH and asymptomatic infectious contact
-  large.asym<-exp(Par.dist[['eta.B']][take]) 
+  large.asym<-exp(Par.dist[['eta.B']][take]) * exp(Par.dist[['hh.size']][take])
   # large HH and symptomatic low viral load infectious contact
   large.sym.low<-exp(Par.dist[['eta.B']][take]) * exp(Par.dist[['LowSym']][take]) *  exp(Par.dist[['hh.size']][take])
   # large HH and symptomatic high viral load infectious contact
@@ -152,10 +164,16 @@ Rates.plot<-function(Par.dist){
             large.asym, large.sym.low, large.sym.high)
   data.b<-data.frame(HH.size,Infectiousness,B.data)
   # The plot for RSV B within HH rates
-  p2<-ggplot(data.b, aes(x=HH.size, y=B.data, fill=Infectiousness)) +
+  p2.hh<-ggplot(data.b, aes(x=HH.size, y=B.data, fill=Infectiousness)) +
     geom_boxplot(outlier.shape = NA) + theme(legend.position="none") + 
-    labs(y = "", x= "Household size",title='RSV B') +
-    scale_y_continuous(limits = quantile(data.a$A.data, c(0.025, 0.975))) 
+    labs(y = "", x= "Household size",title='RSV B',subtitle='Household exposure') +
+    scale_y_continuous(limits = quantile(data.a$A.data, c(0.025, 0.975))) +
+    theme(axis.title.x=element_text(size=10),
+          axis.text=element_text(size=10),
+          plot.title = element_text(size = 15, face = "bold"),
+          plot.subtitle = element_text(size = 10, face = "bold"),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "grey"))
   
   # Calculating the per person community risk of exposure for different
   # categories at different time points
@@ -200,21 +218,101 @@ Rates.plot<-function(Par.dist){
                     min.comm.age1.b, max.comm.age1.b, min.comm.age2.b,
                     max.comm.age2.b, min.comm.age3.b, max.comm.age3.b)
   # The plot for RSV A community rates
-  p1.c <- ggplot(Dat, aes(x= Days)) + 
-    geom_ribbon(aes(ymin= min.comm.age3.a, ymax= max.comm.age3.a,alpha=0.1), fill="black") +
-    geom_ribbon(aes(ymin= min.comm.age1.a, ymax= max.comm.age1.a,alpha=0.1), fill="cyan") +
-    geom_ribbon(aes(ymin= min.comm.age2.a, ymax= max.comm.age2.a,alpha=0.1), fill="red") +
-    labs(y = "Community rate of exposure /susceptible /day",title='RSV A') + 
-    theme(legend.position="none") +
+  p1.a <- ggplot(Dat, aes(x= Days)) + 
+    geom_ribbon(aes(ymin= min.comm.age1.a, ymax= max.comm.age1.a,alpha=0.1), fill="cyan")+
+    labs(y = "",subtitle='Community exposure:<1 year') + 
+    theme(legend.position="none",
+          axis.title.x=element_text(size=10),
+          axis.text=element_text(size=10),
+          plot.subtitle = element_text(size = 10, face = "bold"),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "grey")) +
     scale_y_continuous(limits = c(0,0.035)) 
+  
+  p2.a <- ggplot(Dat, aes(x= Days)) + 
+    geom_ribbon(aes(ymin= min.comm.age2.a, ymax= max.comm.age2.a,alpha=0.1), fill="orange")+
+    labs(y = "",subtitle='Community exposure:1-5 years') + 
+    theme(legend.position="none", 
+          axis.title.x=element_text(size=10),
+          axis.text=element_text(size=10),
+          plot.subtitle = element_text(size = 10, face = "bold"),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "grey")) +
+    scale_y_continuous(limits = c(0,0.035)) 
+  
+  p3.a <- ggplot(Dat, aes(x= Days)) + 
+    geom_ribbon(aes(ymin= min.comm.age3.a, ymax= max.comm.age3.a,alpha=0.1), fill="black")+
+    labs(y = "",subtitle='Community exposure:>5 years') + 
+    theme(legend.position="none",
+          axis.title.y=element_text(size=10, angle=90),
+          axis.title.x=element_text(size=10),
+          axis.text=element_text(size=10),
+          plot.subtitle = element_text(size = 10, face = "bold"),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "grey")) +
+    scale_y_continuous(limits = c(0,0.035)) 
+  scale_y_continuous(limits = c(0,0.035)) 
   # The plot for RSV B community rates
-  p2.c <- ggplot(Dat, aes(x= Days)) + 
-    geom_ribbon(aes(ymin= min.comm.age3.b, ymax= max.comm.age3.b,alpha=0.1), fill="black") +
-    geom_ribbon(aes(ymin= min.comm.age2.b, ymax= max.comm.age2.b,alpha=0.1), fill="red") +
+  p1.b <- ggplot(Dat, aes(x= Days)) + 
     geom_ribbon(aes(ymin= min.comm.age1.b, ymax= max.comm.age1.b,alpha=0.1), fill="cyan") +
-    labs(y = "",title='RSV B') + 
-    theme(legend.position="none")+
+    labs(y = "",subtitle='Community exposure: <1 year') + 
+    theme(legend.position="none",
+          axis.title.x=element_text(size=10),
+          axis.text=element_text(size=10),
+          plot.subtitle = element_text(size = 10, face = "bold"),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "grey"))+
     scale_y_continuous(limits = c(0,0.035)) 
-  grid.arrange(p1,p2,p1.c,p2.c,nrow=2)
+  
+  p2.b <- ggplot(Dat, aes(x= Days)) + 
+    geom_ribbon(aes(ymin= min.comm.age2.b, ymax= max.comm.age2.b,alpha=0.1), fill="orange") +
+    labs(y = "",subtitle='Community exposure: 1-5 years') + 
+    theme(legend.position="none",
+          axis.title.x=element_text(size=10),
+          axis.text=element_text(size=10),
+          plot.subtitle = element_text(size = 10, face = "bold"),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "grey"))+
+    scale_y_continuous(limits = c(0,0.035)) 
+  
+  p3.b <- ggplot(Dat, aes(x= Days)) + 
+    geom_ribbon(aes(ymin= min.comm.age3.b, ymax= max.comm.age3.b,alpha=0.1), fill="black") +
+    labs(y = "",subtitle='Community exposure: >5 years') + 
+    theme(legend.position="none", 
+          axis.title.x=element_text(size=10),
+          axis.text=element_text(size=10),
+          plot.subtitle = element_text(size = 10, face = "bold"),
+          panel.background = element_blank(),
+          axis.line = element_line(colour = "grey"))+
+    scale_y_continuous(limits = c(0,0.035)) 
+  # Laying out the plots
+  lay <- rbind(c(1,1,2,2),
+               c(1,1,2,2),
+               c(3,4,6,7),
+               c(5,5,8,8))
+  
+  # -----------------------------------------
+  # Figure A. 7 in the supplementary appendix
+  # -----------------------------------------
+  # Using RSV A and baseline infectiousness, this calculates the within HH exposure
+  # rate for a range of infectious individuals. 0-6 for small HH, 0-36 for large
+  
+  # rate * number of infected people in small HHs,from 0 up to 6
+  small.hh<-apply(matrix(small.asym),1,function(x)x*seq(0,6))
+  # rate * number of infected people in small HHs,from 0 up to 6
+  large.hh<-apply(matrix(large.asym),1,function(x)x*seq(0,36))
+  # Plotting
+  par(mfrow=c(1,2))
+  matplot(seq(0,6),small.hh,type='l',col='grey',lty=1,main='Small households',
+          ylab='Household rate of exposure',xlab='Number of infectious houshold members',
+          ylim=c(0,max(large.hh)))
+  
+  matplot(seq(0,36),large.hh,type='l',col='pink',lty=1,main='Large households',
+          ylab='Household rate of exposure',xlab='Number of infectious houshold members')
+  # -----------------------------------------
+  # Figure 3 in the main text
+  # -----------------------------------------
+  grid.arrange(p1.hh,p2.hh,p1.a,p2.a,p3.a,p1.b,p2.b,p3.b,layout_matrix = lay)
+  
   
 }

@@ -1,3 +1,8 @@
+# Author:         Ivy K Kombe
+# Institutions:   KEMRI-Wellcome Trust Research Programme, Kilifi, Kenya
+#                 London Schoool of Hygiene and Tropical Medicine, London, UK
+# Date Published: 13th September 2018
+################################################################################
 # This function modifies the raw data into matrices that are then used to estimate
 # parameters of interest. It is called by the main script 'Model_Run.R'.
 # There are two types of raw data that are modified in this script:
@@ -25,7 +30,7 @@
 #    These curves are contained in a dataframe named "Risk.hosp".
 ################################################################################
 ################################################################################
-
+library('ggplot2')
 # ------- These are the functions that are used to modify the raw data ---------
 
 # This function extracts matrices of ct values on given dates 
@@ -50,7 +55,7 @@ Mat.gen<-function(path.data){
 # In addition, it also plots the background community function against the data 
 # that waas used to estimate it (primary household incidence) and the epidemic 
 # curve for the given data based on imputed shedding durations.
-Data.gen<-function(virus.shedding){
+Data.gen<-function(virus.shedding,rsv.group){
   # Funtion for counting episodes and estimating shedding durations
   Episode.finder<-function(person.data){
     shedding.p<-rep(0,length(person.data));onset.p<-rep(0,length(person.data))
@@ -155,7 +160,7 @@ Data.gen<-function(virus.shedding){
   }
   # This function generates the background community density curves from primary 
   # household incidence for a given pathogen
-  CommRisk.func<<-function(virus.shedding){
+  CommRisk.func<<-function(virus.shedding,rsv.group){
     # Scaling between 0 and 1
     scaler<-function(x) return(((x-min(x))/diff(range(x))))
     # infection data dates
@@ -242,11 +247,13 @@ Data.gen<-function(virus.shedding){
     #_______________________________________________________________________________
     # Visualizing output of process
     #_______________________________________________________________________________
-    plot(weeks,HH.inc.wk$inc.a,type='b',pch=20,col='red',xlab='Time',ylab='Primary HH incidence',
-         main='Background community function')
-    lines(weeks,model_incid.a,lty=2,col='blue')
-    legend('topright',col=c('red','blue'),lty=c(NA,2),pch=c(20,NA),legend=c('Data','Fitted curve'),
-           cex=0.8)
+    if(rsv.group=='A') plot.col<-'grey';if(rsv.group=='B') plot.col<-'magenta'
+    plot(weeks,HH.inc.wk$inc.a,type='b',pch=20,col='black',xlab='Time in weeks',
+         ylab='Weekly average number of primary outbeaks',
+         main=paste('RSV',rsv.group,': Incidence of primary outbreaks at household level'),lwd=2)
+    lines(weeks,model_incid.a,lty=1,col=plot.col,lwd=3)
+    legend('topright',col=c('black',plot.col),lty=c(NA,1),pch=c(20,NA),bty='n',
+           legend=c('Data','Fitted curve'),cex=1.2,lwd=c(NA,3))
     # Data for model fitting
     Risk.virus<-scaler(HH.inc.dy.mod$inc.a)
     z<-which(Risk.virus==0);Risk.virus[z]<-0.0000001
@@ -315,11 +322,12 @@ Data.gen<-function(virus.shedding){
     if(length(y)>0) postInf.a[((min(y)+1):D),p]<-1
   }
   # 5. Community densty function 
-  par(mfrow=c(1,2),oma = c(0, 0, 1, 0),mar=c(5,5,2,4)+.1,cex=0.8,cex.lab=1,bg='white')
+  par(mfrow=c(1,1),oma = c(0, 0, 1, 0),mar=c(5,5,2,4)+.1,cex=1.2,cex.lab=1.2,
+      cex.main=1.1,bg='white')
   plot(rowSums(Shedding.a),type='l',xlab='Days in the data',main=Pathogen.name,
        ylab='Total number of people shedding',lwd=2)
   
-  Comm.risk<-CommRisk.func(virus.shedding)
+  Comm.risk<-CommRisk.func(virus.shedding,rsv.group)
   
   Results<-list(Shedding=Shedding.a,Onset=Onset.a,Shedding.est.ct=Shedding.a.est.ct,
                 Shedding.est.load=Shedding.a.est.load,status=status,atRisk=atRisk.a,
@@ -498,11 +506,14 @@ RSV.gen<-function(){
     #_______________________________________________________________________________
     # Visualizing output of process
     #_______________________________________________________________________________
-    plot(weeks,HH.inc.wk$inc.a,type='b',pch=20,col='red',xlab='Time',ylab='Primary HH incidence',
-         main='Background community function')
-    lines(weeks,model_incid.a,lty=2,col='blue')
-    legend('topright',col=c('red','blue'),lty=c(NA,2),pch=c(20,NA),legend=c('Data','Fitted curve'),
-           cex=0.8)
+    par(mfrow=c(1,1))
+    plot(weeks,HH.inc.wk$inc.a,type='b',pch=20,col='black',xlab='Time in weeks',
+         ylab='Weekly average number of primary outbeaks',lwd=2,
+         main='RSV Incidence of primary outbreaks at household level')
+    lines(weeks,model_incid.a,lty=1,col='red',lwd=2)
+    legend('topright',col=c('black','red'),lty=c(NA,1),pch=c(20,NA),legend=c('Data','Fitted curve'),
+           cex=1,bty='n')
+
     # Data for model fitting
     Risk.virus<-scaler(HH.inc.dy.mod$inc.a)
     z<-which(Risk.virus==0);Risk.virus[z]<-0.0000001
@@ -686,7 +697,7 @@ ARI[which(Nasal==0 & ARI<0,TRUE)]<-0;ARI[which(DiB==0 & ARI<0,TRUE)]<-0 # more -
 # converting data to matrix form
 virus.shedding<-Mat.gen(Data$rsva);Pathogen.name<<-'RSV A'
 # imputing shedding durations & generating all the other matrices needed for fitting
-Shed.data<-Data.gen(virus.shedding)
+Shed.data<-Data.gen(virus.shedding,'A')
 # Imputing ARI episodes within shedding episodes
 ARI.estimated<-ARI.est(Shed.data$Shedding,Shed.data$Onset,ARI)
 
@@ -694,9 +705,17 @@ ARI.estimated<-ARI.est(Shed.data$Shedding,Shed.data$Onset,ARI)
 # converting data to matrix form
 virus.shedding.2<-Mat.gen(Data$rsvb);Pathogen.name<<-'RSV B'
 # imputing shedding durations & generating all the other matrices needed for fitting
-Shed.data.2<-Data.gen(virus.shedding.2)
+Shed.data.2<-Data.gen(virus.shedding.2,'B')
 # Imputing ARI episodes within shedding episodes
 ARI.estimated.2<-ARI.est(Shed.data.2$Shedding,Shed.data.2$Onset,ARI)
+
+# Plotting the estimated background community density curves
+layout(matrix(c(0,0,1,1),nrow=2,ncol=2,byrow=T))
+plot(Shed.data$Comm.risk,type='l',col='grey',lwd=2,xlab='Time in days',
+     ylab='Relative rate',main='Estimated background community rate functions')
+lines(Shed.data.2$Comm.risk,col='magenta',lwd=2)
+legend('topright',col=c('grey','magenta'),lty=1,legend=c('RSV A','RSV B'),bty='n',
+       cex=1)
 
 # RSV as a single pathogen
 Shed.data.3<-RSV.gen()
@@ -710,10 +729,10 @@ Risk.hosp<-Comm.risk.hosp()
 
 # --- Visualizing shedding and ARI patterns 
 # RSV A shedding an ARI
-shed.a<-which(colSums(Shed.data$Onset)>0)
+shed.a<-which(colSums(Shed.data$Onset)>0);Pathogen.name<<-'RSV A'
 Dot.plot2(Shedding=Shed.data$Shedding,Symptom=ARI.estimated,pple=shed.a,pnt.size=1,lab.size=5)
 # RSV B shedding and ARI
-shed.b<-which(colSums(Shed.data.2$Onset)>0)
+shed.b<-which(colSums(Shed.data.2$Onset)>0);Pathogen.name<<-'RSV B'
 Dot.plot2(Shedding=Shed.data.2$Shedding,Symptom=ARI.estimated.2,pple=shed.b,pnt.size=1,lab.size=5)
 # RSV A and B shedding
 Shedding<-Shed.data$Shedding;Shedding[Shed.data.2$Shedding==1]<-1
