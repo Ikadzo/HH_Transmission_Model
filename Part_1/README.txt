@@ -1,6 +1,6 @@
 Author:         Ivy K Kombe
 Institutions:   KEMRI-Wellcome Trust Research Programme, Kilifi, Kenya
-                London Schoool of Hygiene and Tropical Medicine, London, UK
+                London School of Hygiene and Tropical Medicine, London, UK
 Date Published: 13th September 2018
 
 Project:        Model-based estimates of transmission of respiratory syncytial virus within households.

@@ -1,7 +1,7 @@
 # Author:         Ivy K Kombe
 # Institutions:   KEMRI-Wellcome Trust Research Programme, Kilifi, Kenya
 #                 London Schoool of Hygiene and Tropical Medicine, London, UK
-# Date Published: 23th September 2019
+# Date Published: 23rd September 2019
 ################################################################################
 # This code runs the household transmission model that uses genetic data in the
 # form of genetic clusters. The some data used in running the model was modified
