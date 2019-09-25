@@ -4,8 +4,8 @@
 # Date Published: 23rd September 2019
 ################################################################################
 # This code runs the household transmission model that uses genetic data in the
-# form of genetic clusters. The some data used in running the model was modified
-# on the R platform and saved as CSV files which a called here. The results of
+# form of genetic clusters. Some of the data used in running the model was modified
+# on the R platform and saved as CSV files which are called here. The results of
 # the MCMC runs generated here are then saved as CSV files for analysis in R.
 ################################################################################
 # Setting up the environment
