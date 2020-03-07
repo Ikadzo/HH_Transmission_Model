@@ -1,8 +1,8 @@
-# Author:         Ivy K Kombe
+## Author:         Ivy K Kombe
 
-# Institutions:   KEMRI-Wellcome Trust Research Programme, Kilifi, Kenya London School of Hygiene and Tropical Medicine, London, UK
+* Institutions:   KEMRI-Wellcome Trust Research Programme, Kilifi, Kenya London School of Hygiene and Tropical Medicine, London, UK
                 
-# Project:        Codes for analysing household data from an RSV outbreak in rural coastal Kenya.
+** Project:        Codes for analysing household data from an RSV outbreak in rural coastal Kenya.
 
 This work describes the analysis of household cohort data collected over a period of 6 months covering an epidemic of
 respiratory syncytial virus (RSV). The data was collected from a rural coastal community in Kenya in 2009.The aim of the analysis is
