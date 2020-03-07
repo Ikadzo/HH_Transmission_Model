@@ -1,6 +1,8 @@
 ### Author:         Ivy K Kombe
 
-### Institutions:   KEMRI-Wellcome Trust Research Programme, Kilifi, Kenya London School of Hygiene and Tropical Medicine, London, UK
+### Institutions:   
+* KEMRI-Wellcome Trust Research Programme, Kilifi, Kenya 
+*London School of Hygiene and Tropical Medicine, London, UK
                 
 ### Project:        Codes for analysing household data from an RSV outbreak in rural coastal Kenya.
 
