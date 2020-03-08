@@ -16,7 +16,7 @@ The analysis was done in RStudio Version 1.1.383 - https://www.rstudio.com/. The
 
 Dataset 
 The data is available under the Creative Commons Attribution 4.0 International (CC BY 4.0) - 
-https://creativecommons.org/licenses/by/4.0/legalcode. For access to data and more detailed information beyond the metadata provided, there is a process of managed access requiring submission of a request form for consideration by the Data Governance Committee at KEMRI-Wellcome Trust Research Programme (http://kemri-wellcome.org/about-us/#ChildVerticalTab_15).There are two data files provided for the analysis. One is the household cohort data. The other is on the results of RSV antigen testing conducted at the Kilifi County Hospital during the same time period as the household study. These data are for children <5 years of age. 
+https://creativecommons.org/licenses/by/4.0/legalcode. For access to data and more detailed information beyond the metadata provided, there is a process of managed access requiring submission of a request form for consideration by the Data Governance Committee at KEMRI-Wellcome Trust Research Programme (http://kemri-wellcome.org/about-us/#ChildVerticalTab_15). There are two data files provided for the analysis. One is the household cohort data. The other is on the results of RSV antigen testing conducted at the Kilifi County Hospital during the same time period as the household study. These data are for children <5 years of age. 
 
 File list
 The following are the files that accompany the data:
