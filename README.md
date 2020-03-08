@@ -8,7 +8,8 @@
 
 This work describes the analysis of household cohort data collected over a period of 6 months covering an epidemic of
 respiratory syncytial virus (RSV). The data was collected from a rural coastal community in Kenya in 2009.The aim of the analysis is
-to gain a better understanding of RSV transmission for the purpose of intervention planning. There are three main parts to this analysis:
+to gain a better understanding of RSV transmission for the purpose of intervention planning. Most of this work was done as part of my doctoral project, the complete thesis can be accessed at the following link: https://doi.org/10.17037/PUBS.04656186.
+There are three main parts to this analysis:
 ### Part 1 
 Analaysis of the social-temporal shedding patterns of RSV.
         The aim of this analysis was to identify determinants of RSV infection onset. We show that household size, symptom status and viral load
