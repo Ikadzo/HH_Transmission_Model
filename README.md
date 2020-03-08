@@ -14,7 +14,7 @@ There are three main parts to this analysis:
 Analaysis of the social-temporal shedding patterns of RSV.
         The aim of this analysis was to identify determinants of RSV infection onset. We show that household size, symptom status and viral load
         are important factors of within household transmission. We find evidence of the possible existence of an RSV group specific 
-        transmission niche that could form part of the explanation for RSV A and B temporal and geographical co-existence. 
+        transmission niche that could form part of the explanation for RSV A and B temporal and geographical co-existence. This work has been published in the Epidemics journal and can be found at the following link: https://doi.org/10.1016/j.epidem.2018.12.001.
 ### Part 2 
 Analaysis of the social-temporal and genetic shedding patterns of RSV.
         This is an extension of Part 1 that aimed to identify generalizable characteristics of RSV transmission chains at the household level.
