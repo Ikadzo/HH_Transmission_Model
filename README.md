@@ -24,7 +24,7 @@ Analaysis of the social-temporal and genetic shedding patterns of RSV.
         sibling or cousin of school going age (2 to 13 years). We found that increased pathogen resolution had a slight effect on both 
         accuracy (resulting in narrower credible intervals for some parameters) and model inference (resulting in a change of transmission 
         hypothesis) The differences in infection patterns and interaction through modifiedsusceptibility inferred between RSV-A and RSV-B 
-        warrant further investigation. 
+        warrant further investigation. A pre-print version of this work is available on medRxiv https://www.medrxiv.org/content/10.1101/2020.03.08.20030742v1. 
 ### Part 3 
 Analysis of social-temporal shedding patterns of RSV, rhinoviruses and endemic coronaviruses.
         This is an extension of Part 1 that aimed to investigate if the observed patterns of RSV shedding are influenced by interactions 
